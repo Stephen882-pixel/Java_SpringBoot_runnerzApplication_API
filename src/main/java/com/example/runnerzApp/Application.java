@@ -1,11 +1,16 @@
 package com.example.runnerzApp;
 
+import com.example.runnerzApp.run.Run;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @SpringBootApplication
 public class Application {
@@ -14,7 +19,15 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class,args);
-		log.info("Something changed");
+
+	}
+
+	@Bean
+	CommandLineRunner runner(){
+		return args -> {
+			Run run = new Run(1,"First Run", LocalDateTime.now(),LocalDateTime.now().plus(1, ChronoUnit.HOURS),5);
+			log.info("Run: " + run);
+		};
 	}
 
 }
